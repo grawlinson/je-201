@@ -5,7 +5,6 @@
 #pragma once
 
 #include <cmath>
-#define Pi 3.1415926535897932384626433
 
 enum BiquadType
 {
@@ -77,7 +76,7 @@ class Biquad
     void CalcFilter()
     {
         // Omega: Angular frequency
-        float w = 2 * Pi * (CutoffFrequency / SampleRate);
+        float w = 2 * M_PI * (CutoffFrequency / SampleRate);
 
         // Cos(Omega)
         float cosw = cos(w);

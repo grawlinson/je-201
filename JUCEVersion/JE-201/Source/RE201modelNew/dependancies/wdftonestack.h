@@ -6,7 +6,7 @@
 //
 // Implements a wdf model of a modified 5F6-A tone stack. The filter had been designed to model the frequency response of the RE-201 tone stack.  
 
-#define M_PI 3.1415926535897932384626433
+#include <cmath>
 
 #include "chowdsp_wdf/chowdsp_wdf.h"
 using namespace chowdsp::wdft;
