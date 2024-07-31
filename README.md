@@ -71,6 +71,12 @@ equalisation modelling, modified to be direct form 2 transposed.
 [Daniel Walz][7] - GUI for JUCE versions of the plugin was created using
 the `foleys_gui_magic` library.
 
+## License
+
+The main project is `GPL-3.0-only` (unsure if "GPL3" refers to `GPL-3.0-only`
+or `GPL-3.0-or-later`), whereas all external libraries are licensed under
+their respective licenses.
+
 [0]: https://github.com/jatinchowdhury18/AnalogTapeModel
 [1]: https://github.com/Chowdhury-DSP/chowdsp_wdf
 [2]: https://journals.tubitak.gov.tr/elektrik/vol11/iss3/3/
