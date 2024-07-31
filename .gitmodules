@@ -3,7 +3,10 @@
 	url = https://github.com/juce-framework/JUCE.git
 [submodule "libs/FFTConvolver"]
 	path = libs/FFTConvolver
-	url = git@github.com:grawlinson/FFTConvolver.git
+	url = https://github.com/grawlinson/FFTConvolver.git
 [submodule "libs/chowdsp_wdf"]
 	path = libs/chowdsp_wdf
-	url = git@github.com:Chowdhury-DSP/chowdsp_wdf.git
+	url = https://github.com/Chowdhury-DSP/chowdsp_wdf.git
+[submodule "libs/foleys_gui_magic"]
+	path = libs/foleys_gui_magic
+	url = https://github.com/ffAudio/foleys_gui_magic.git
