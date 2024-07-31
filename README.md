@@ -4,6 +4,19 @@ This repository is dedicated to digital modelling of the Roland RE-201.
 
 ![screenshot](docs/screenshot.png)
 
+## Building
+
+```sh
+# clone repository
+git clone https://github.com/grawlinson/je-201.git && cd je-201
+# setup all submodules
+git submodule update --init --recursive
+# setup cmake & start building!
+cmake -B build -S . && cmake --build build
+# plugins should be found in the following directory
+cd build/JE-201_artefacts/Release
+```
+
 ## History
 
 The original folder contains a (mostly) header only library implementing
