@@ -1,6 +1,15 @@
-# RE201models
+# JE-201
 
-This repository is dedicated to digital modelling of the Roland RE-201.
+This repository is dedicated to digital modelling of the [Roland RE-201][8].
+
+Plugins currently available are:
+
+* Standalone
+* VST3
+* AU
+* AUv3
+* LV2
+* CLAP
 
 ![screenshot](docs/screenshot.png)
 
@@ -19,8 +28,8 @@ cd build/JE-201_artefacts/Release
 
 ## History
 
-The original folder contains a (mostly) header only library implementing
-four seperate digital models of a [Roland RE-201][8], developed throughout the
+The [original folder][9] contains a (mostly) header only library implementing
+four seperate digital models of a Roland RE-201, developed throughout the
 duration of my final year project, on the BSc Sound Engineering and Production
 course at Birmingham City University. The models are classes which can be
 implemented into an audio plugin in any framework.
@@ -99,3 +108,4 @@ their respective licenses.
 [6]: https://www.earlevel.com/main/2012/11/26/biquad-c-source-code/
 [7]: https://github.com/ffAudio/foleys_gui_magic
 [8]: https://en.wikipedia.org/wiki/Roland_Space_Echo
+[9]: https://github.com/je3928/RE201models
