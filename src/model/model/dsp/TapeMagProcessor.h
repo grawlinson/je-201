@@ -1,7 +1,7 @@
 #pragma once
 
-#include "dependancies/tapemag.h"
-#include "dependancies/FirFilter.h"
+#include "base/TapeMag.h"
+#include "base/FIRFilter.h"
 #include <vector>
 #include <memory>
 
@@ -23,8 +23,8 @@ private:
 
     // DSP objects
     std::vector<std::unique_ptr<rk4thOrderODETapeMag>> TapeODESolvers;
-    std::vector<std::unique_ptr<FirFilter>> InterpolationFilters;
-    std::vector<std::unique_ptr<FirFilter>> DecimationFilters;
+    std::vector<std::unique_ptr<FIRFilter>> InterpolationFilters;
+    std::vector<std::unique_ptr<FIRFilter>> DecimationFilters;
 
     // Object variables
     float SampleRate = 0.0f;

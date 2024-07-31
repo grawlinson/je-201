@@ -4,9 +4,9 @@
 #include <vector>
 
 
-class FirFilter {
+class FIRFilter {
 public:
-	FirFilter(int numTaps) : m_numTaps(numTaps) {
+	FIRFilter(int numTaps) : m_numTaps(numTaps) {
 		m_coeffs.resize(numTaps);
 		m_delayLine.resize(numTaps);
 	}

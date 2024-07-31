@@ -1,17 +1,17 @@
-#include "RE201model.h"
-#include "WetDryProcessor.h"
+#include "RE201.h"
+#include "dsp/WetDryProcessor.h"
 
-RE201model::RE201model()
+RE201Model::RE201Model()
 {
 
 }
 
-RE201model::~RE201model()
+RE201Model::~RE201Model()
 {
 
 }
 
-void RE201model::Reset(float sampleRate, int OSamount, int numChannels)
+void RE201Model::Reset(float sampleRate, int OSamount, int numChannels)
 {
     // Save channel count and sample rate
     NumChannels = numChannels;
@@ -31,7 +31,7 @@ void RE201model::Reset(float sampleRate, int OSamount, int numChannels)
 
 }
 
-void RE201model::UpdateParameters(float low, float high, float intensity, float delaytime, int playheadenabled[], int delayenabled, float delayamount, int reverbenabled, float reverbamount, float inputlevel, float wetdry, bool convorwaveguide) 
+void RE201Model::UpdateParameters(float low, float high, float intensity, float delaytime, int playheadenabled[], int delayenabled, float delayamount, int reverbenabled, float reverbamount, float inputlevel, float wetdry, bool convorwaveguide) 
 {
     ReverbEnabled = reverbenabled;
 
@@ -46,7 +46,7 @@ void RE201model::UpdateParameters(float low, float high, float intensity, float 
 }
 
 
-void RE201model::ProcessBuffer(std::vector<std::vector<float>>& buffer, int blockSize)
+void RE201Model::ProcessBuffer(std::vector<std::vector<float>>& buffer, int blockSize)
 {
 
     // Save channels and block size

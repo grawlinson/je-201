@@ -1,4 +1,4 @@
-#include "Reverbprocessor.h"
+#include "ReverbProcessor.h"
 
 void ReverbProcessor::Reset(float sampleRate, int numChannels) 
 {

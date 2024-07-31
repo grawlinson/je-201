@@ -1,6 +1,6 @@
 #pragma once
 
-#include "dependancies/Reverb.h"
+#include "base/Reverb.h"
 #include <memory>
 
 class ReverbProcessor 

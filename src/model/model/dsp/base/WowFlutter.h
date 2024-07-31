@@ -7,10 +7,8 @@
 
 #pragma once
 
-
 #include <cmath>
 #include "Biquad.h"
-
 
 
 class SineOsc 

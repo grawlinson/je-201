@@ -1,10 +1,10 @@
 #pragma once
 
-#include "dependancies/CircularBuffer.h"
-#include "dependancies/wowflutter.h"
-#include "dependancies/OnePole.h"
-#include "dependancies/tapemag.h"
-#include "dependancies/Biquad.h"
+#include "base/CircularBuffer.h"
+#include "base/WowFlutter.h"
+#include "base/OnePole.h"
+#include "base/TapeMag.h"
+#include "base/Biquad.h"
 #include <vector>
 
 

@@ -1,18 +1,18 @@
 #pragma once
 
-#include "ToneFiltering.h"
-#include "TapeMagProcessor.h"
-#include "TapeDelay.h"
-#include "ReverbProcessor.h"
-#include "WetDryProcessor.h"
+#include "dsp/ToneFilteringProcessor.h"
+#include "dsp/TapeMagProcessor.h"
+#include "dsp/TapeDelayProcessor.h"
+#include "dsp/ReverbProcessor.h"
+#include "dsp/WetDryProcessor.h"
 
-class RE201model
+class RE201Model
 {
 
 public:
 
-    RE201model();
-    ~RE201model();
+    RE201Model();
+    ~RE201Model();
 
     void Reset(float sampleRate, int OSamount, int numChannels); 
     void UpdateParameters(float low, float high, float intensity, float delaytime, int playheadenabled[], int delayenabled, float delayamount, int reverbenabled, float reverbamount, float inputlevel, float wetdry, bool convorwaveguide);

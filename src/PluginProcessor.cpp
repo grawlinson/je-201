@@ -25,7 +25,7 @@ JE201AudioProcessor::JE201AudioProcessor()
     
     FOLEYS_SET_SOURCE_PATH(__FILE__);
     
-    magicState.setGuiValueTree(BinaryData::JE201GuiNew3_xml, BinaryData::JE201GuiNew3_xmlSize);
+    magicState.setGuiValueTree(BinaryData::magic_xml, BinaryData::magic_xmlSize);
     
     // Set this processor object as a listener to the value tree
     treestate.state.addListener(this);

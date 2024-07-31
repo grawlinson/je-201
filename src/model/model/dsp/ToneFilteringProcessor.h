@@ -1,7 +1,7 @@
 #pragma once
 
-#include "dependancies/wdftonestack.h"
-#include "dependancies/vatonestack.h"
+#include "base/WDFToneStack.h"
+#include "base/VAToneStack.h"
 #include <memory>
 
 class ToneStackProcessor 

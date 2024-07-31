@@ -46,8 +46,8 @@ void TapeMagProcessor::Reset(float sampleRate, int numChannels, int osamount)
         // Only initialise new oversampling filters when oversampling
         if (OSamount > 1)
         {
-            InterpolationFilters.push_back(std::make_unique<FirFilter>(intTaps));
-            DecimationFilters.push_back(std::make_unique<FirFilter>(decTaps));
+            InterpolationFilters.push_back(std::make_unique<FIRFilter>(intTaps));
+            DecimationFilters.push_back(std::make_unique<FIRFilter>(decTaps));
 
             InterpolationFilters[channel]->setCutoffFrequency(20000.f, overSampleRate);
             DecimationFilters[channel]->setCutoffFrequency(20000.f, overSampleRate);

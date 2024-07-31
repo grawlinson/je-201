@@ -1,4 +1,4 @@
-#include "ToneFiltering.h"
+#include "ToneFilteringProcessor.h"
 
 void ToneStackProcessor::Reset(float sampleRate, int numChannels, bool vaorwdf) 
 {

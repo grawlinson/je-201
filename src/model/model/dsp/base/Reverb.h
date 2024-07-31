@@ -1,7 +1,7 @@
 #pragma once
 
 #include "FFTConvolver/TwoStageFFTConvolver.h"
-#include "re2ir.h"
+#include "ImpulseResponse.h"
 #include "WaveguideSpringReverb.h"
 
 

@@ -11,7 +11,7 @@
 
 #include <JuceHeader.h>
 #include <memory>
-#include "RE201modelNew/RE201model.h"
+#include "RE201.h"
 
 using namespace juce;
 
@@ -76,7 +76,7 @@ private:
     // ------ Plugin Objects
     
     // Space echo model
-    RE201model echomodel;
+    RE201Model echomodel;
     
     // Valuetree objects and functions
     AudioProcessorValueTreeState treestate;
