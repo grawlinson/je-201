@@ -4,3 +4,6 @@
 [submodule "libs/FFTConvolver"]
 	path = libs/FFTConvolver
 	url = git@github.com:grawlinson/FFTConvolver.git
+[submodule "libs/chowdsp_wdf"]
+	path = libs/chowdsp_wdf
+	url = git@github.com:Chowdhury-DSP/chowdsp_wdf.git
