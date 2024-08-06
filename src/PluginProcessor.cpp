@@ -7,7 +7,6 @@
 */
 
 #include "PluginProcessor.h"
-#include "PluginEditor.h"
 #include <BinaryData.h>
 //==============================================================================
 JE201AudioProcessor::JE201AudioProcessor()

@@ -54,10 +54,8 @@ juce_add_binary_data(${PROJECT_NAME}_data
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
-  src/PluginEditor.cpp
-  src/PluginEditor.h
   src/PluginProcessor.cpp
-  src/PluginEditor.h
+  src/PluginProcessor.h
 )
 
 target_link_libraries(${PROJECT_NAME}
