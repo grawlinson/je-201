@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
+# set better CMake defaults
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD 17)
 if(NOT CMAKE_BUILD_TYPE)
@@ -11,19 +12,25 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNU" AND UNIX AND NOT APPLE AND NOT JE201_SKIP
   set(CMAKE_EXE_LINKER_FLAGS "-no-pie")
 endif()
 
-project(JE-201 VERSION 1.0.1 LANGUAGES CXX)
-
+# JUCE & dependencies
 add_subdirectory(libs/JUCE)
 add_subdirectory(libs/clap-juce-extensions)
 juce_add_module(libs/foleys_gui_magic/modules/foleys_gui_magic)
 add_subdirectory(src/model)
 
+# metadata
+set(COMPANY_NAME "grawlinson")
+set(PROJECT_NAME "JE-201")
+set(PLUGIN_ID "com.${COMPANY_NAME}.${PROJECT_NAME}")
+project(${PROJECT_NAME} VERSION 1.0.1 LANGUAGES CXX)
+
+# setup JUCE
 juce_add_plugin(${PROJECT_NAME}
-  COMPANY_NAME "JEPlugins"
-  COMPANY_WEBSITE "https://github.com/je3928/RE201models"
-  BUNDLE_ID "com.JEPlugins.JE201"
+  COMPANY_NAME ${COMPANY_NAME}
+  COMPANY_WEBSITE "https://github.com/grawlinson/je201"
+  BUNDLE_ID ${PLUGIN_ID}
   DESCRIPTION "Digital model of the Roland RE-201"
-  PLUGIN_MANUFACTURER_CODE JEPL
+  PLUGIN_MANUFACTURER_CODE GRAW
   PLUGIN_CODE J201
   FORMATS Standalone VST3 AU AUv3 LV2
   IS_SYNTH FALSE
@@ -36,8 +43,9 @@ juce_add_plugin(${PROJECT_NAME}
   AU_MAIN_TYPE kAudioUnitType_Effect
 )
 
+# setup CLAP plugin
 clap_juce_extensions_plugin(TARGET ${PROJECT_NAME}
-  CLAP_ID "com.JEPlugins.JE201"
+  CLAP_ID ${PLUGIN_ID}
   CLAP_FEATURES "audio-effect" "delay" "reverb"
 )
 
