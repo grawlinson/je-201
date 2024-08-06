@@ -45,9 +45,6 @@ juce_add_binary_data(${PROJECT_NAME}_data
   SOURCES resources/magic.xml
 )
 
-# TODO remove this
-juce_generate_juce_header(${PROJECT_NAME})
-
 target_sources(${PROJECT_NAME} PRIVATE
   src/PluginEditor.cpp
   src/PluginEditor.h

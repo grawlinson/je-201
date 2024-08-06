@@ -8,12 +8,11 @@
 
 #pragma once
 
+#include <juce_audio_processors/juce_audio_processors.h>
+#include <juce_data_structures/juce_data_structures.h>
+#include <foleys_gui_magic/foleys_gui_magic.h>
 
-#include <JuceHeader.h>
-#include <memory>
 #include "RE201.h"
-
-using namespace juce;
 
 //==============================================================================
 /**
@@ -65,9 +64,9 @@ private:
     
     std::atomic<float> *InputLevel = nullptr, *WetDry = nullptr, *Bass = nullptr, *Treble = nullptr, *RepeatRate = nullptr, *Intensity = nullptr, *ReverbVolume = nullptr, *EchoVolume = nullptr;
     
-    AudioParameterChoice *DelaySetting = nullptr;
+    juce::AudioParameterChoice *DelaySetting = nullptr;
 
-    AudioParameterChoice* ReverbType= nullptr;
+    juce::AudioParameterChoice* ReverbType= nullptr;
     
     //Keep for when fixed
     //, *OSAmount = nullptr;
@@ -79,8 +78,8 @@ private:
     RE201Model echomodel;
     
     // Valuetree objects and functions
-    AudioProcessorValueTreeState treestate;
-    AudioProcessorValueTreeState::ParameterLayout params(); 
+    juce::AudioProcessorValueTreeState treestate;
+    juce::AudioProcessorValueTreeState::ParameterLayout params(); 
     
     // -------
     

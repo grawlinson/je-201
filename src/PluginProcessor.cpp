@@ -8,7 +8,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-
+#include <BinaryData.h>
 //==============================================================================
 JE201AudioProcessor::JE201AudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -218,34 +218,34 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
     return new JE201AudioProcessor();
 }
 
-AudioProcessorValueTreeState::ParameterLayout JE201AudioProcessor::params() {
+juce::AudioProcessorValueTreeState::ParameterLayout JE201AudioProcessor::params() {
 
     juce::AudioProcessorValueTreeState::ParameterLayout parameters;
 
     auto inputgroup = std::make_unique<juce::AudioProcessorParameterGroup>("Input", "INPUT", "|");
 
-    inputgroup->addChild(std::make_unique<AudioParameterFloat>("InputLevel", "INPUTLEVEL", 0.0f, 5.0f, 0.5f));
-    inputgroup->addChild(std::make_unique<AudioParameterFloat>("WetDry", "WETDRY", 0.0f, 1.0f, 0.5f));
-    inputgroup->addChild(std::make_unique<AudioParameterFloat>("Bass", "BASS", 0.0f, 1.0f, 0.5f));
-    inputgroup->addChild(std::make_unique<AudioParameterFloat>("Treble", "TREBLE", 0.0f, 1.0f, 0.5f));
+    inputgroup->addChild(std::make_unique<juce::AudioParameterFloat>("InputLevel", "INPUTLEVEL", 0.0f, 5.0f, 0.5f));
+    inputgroup->addChild(std::make_unique<juce::AudioParameterFloat>("WetDry", "WETDRY", 0.0f, 1.0f, 0.5f));
+    inputgroup->addChild(std::make_unique<juce::AudioParameterFloat>("Bass", "BASS", 0.0f, 1.0f, 0.5f));
+    inputgroup->addChild(std::make_unique<juce::AudioParameterFloat>("Treble", "TREBLE", 0.0f, 1.0f, 0.5f));
 
     parameters.add(std::move(inputgroup));
 
 
     auto delaygroup = std::make_unique<juce::AudioProcessorParameterGroup>("Delay", "DELAY", "|");
 
-    delaygroup->addChild(std::make_unique<AudioParameterChoice>("DelaySetting", "DELAYSETTING", StringArray("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "Reverb Only"), 0));
-    delaygroup->addChild(std::make_unique<AudioParameterFloat>("RepeatRate", "REPEATRATE", 0.0f, 1.0f, 0.5f));
-    delaygroup->addChild(std::make_unique<AudioParameterFloat>("Intensity", "INTENSITY", 0.0f, 1.0f, 0.5f));
+    delaygroup->addChild(std::make_unique<juce::AudioParameterChoice>("DelaySetting", "DELAYSETTING", juce::StringArray("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "Reverb Only"), 0));
+    delaygroup->addChild(std::make_unique<juce::AudioParameterFloat>("RepeatRate", "REPEATRATE", 0.0f, 1.0f, 0.5f));
+    delaygroup->addChild(std::make_unique<juce::AudioParameterFloat>("Intensity", "INTENSITY", 0.0f, 1.0f, 0.5f));
 
     parameters.add(std::move(delaygroup));
 
     auto mastergroup = std::make_unique<juce::AudioProcessorParameterGroup>("Master", "MASTER", "|");
 
-    mastergroup->addChild(std::make_unique<AudioParameterChoice>("ReverbType", "REVERBTYPE", StringArray("Convolution", "Waveguide"), 0));
-    //mastergroup->addChild(std::make_unique<AudioParameterChoice>("OsAmount", "OSAMOUNT", StringArray("1", "2", "4", "8", "16"), 0));
-    mastergroup->addChild(std::make_unique<AudioParameterFloat>("ReverbVolume", "REVERBVOLUME", 0.0f, 1.0f, 0.5f));
-    mastergroup->addChild(std::make_unique<AudioParameterFloat>("EchoVolume", "ECHOVOLUME", 0.0f, 1.0f, 0.5f));
+    mastergroup->addChild(std::make_unique<juce::AudioParameterChoice>("ReverbType", "REVERBTYPE", juce::StringArray("Convolution", "Waveguide"), 0));
+    //mastergroup->addChild(std::make_unique<juce::AudioParameterChoice>("OsAmount", "OSAMOUNT", juce::StringArray("1", "2", "4", "8", "16"), 0));
+    mastergroup->addChild(std::make_unique<juce::AudioParameterFloat>("ReverbVolume", "REVERBVOLUME", 0.0f, 1.0f, 0.5f));
+    mastergroup->addChild(std::make_unique<juce::AudioParameterFloat>("EchoVolume", "ECHOVOLUME", 0.0f, 1.0f, 0.5f));
 
     parameters.add(std::move(mastergroup));
 
@@ -265,12 +265,12 @@ void JE201AudioProcessor::populateParameters() {
     Treble = treestate.getRawParameterValue("Treble");
     
     
-    DelaySetting = (static_cast<AudioParameterChoice*>(treestate.getParameter("DelaySetting")));
+    DelaySetting = (static_cast<juce::AudioParameterChoice*>(treestate.getParameter("DelaySetting")));
     RepeatRate = treestate.getRawParameterValue("RepeatRate");
     Intensity = treestate.getRawParameterValue("Intensity");
 
-    ReverbType = (static_cast<AudioParameterChoice*>(treestate.getParameter("ReverbType")));
-    //OSAmount = (static_cast<AudioParameterChoice*>(treestate.getParameter("OsAmount")));
+    ReverbType = (static_cast<juce::AudioParameterChoice*>(treestate.getParameter("ReverbType")));
+    //OSAmount = (static_cast<juce::AudioParameterChoice*>(treestate.getParameter("OsAmount")));
     ReverbVolume = treestate.getRawParameterValue("ReverbVolume");
     EchoVolume = treestate.getRawParameterValue("EchoVolume");
 
