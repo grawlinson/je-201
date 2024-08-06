@@ -1,25 +1,22 @@
 #pragma once
 
-#include "dsp/ToneFilteringProcessor.h"
-#include "dsp/TapeMagProcessor.h"
-#include "dsp/TapeDelayProcessor.h"
 #include "dsp/ReverbProcessor.h"
+#include "dsp/TapeDelayProcessor.h"
+#include "dsp/TapeMagProcessor.h"
+#include "dsp/ToneFilteringProcessor.h"
 #include "dsp/WetDryProcessor.h"
 
 class RE201Model
 {
-
 public:
-
     RE201Model();
     ~RE201Model();
 
-    void Reset(float sampleRate, int OSamount, int numChannels); 
-    void UpdateParameters(float low, float high, float intensity, float delaytime, int playheadenabled[], int delayenabled, float delayamount, int reverbenabled, float reverbamount, float inputlevel, float wetdry, bool convorwaveguide);
-    void ProcessBuffer(std::vector<std::vector<float>>& buffer, int blockSize);
+    void Reset (float sampleRate, int OSamount, int numChannels);
+    void UpdateParameters (float low, float high, float intensity, float delaytime, int playheadenabled[], int delayenabled, float delayamount, int reverbenabled, float reverbamount, float inputlevel, float wetdry, bool convorwaveguide);
+    void ProcessBuffer (std::vector<std::vector<float>>& buffer, int blockSize);
 
 private:
-
     // DSP objects
     std::unique_ptr<ToneStackProcessor> ToneStack = std::make_unique<ToneStackProcessor>();
     std::unique_ptr<TapeMagProcessor> TapeMag = std::make_unique<TapeMagProcessor>();
@@ -43,5 +40,4 @@ private:
 
     // Wet dry param for blending tsbuffer
     float wetDry = 0.0f;
-
 };

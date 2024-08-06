@@ -1,26 +1,20 @@
 #pragma once
 
-#include "base/TapeMag.h"
 #include "base/FIRFilter.h"
-#include <vector>
+#include "base/TapeMag.h"
 #include <memory>
-
-
+#include <vector>
 
 class TapeMagProcessor
 {
-
 public:
-
     TapeMagProcessor();
     ~TapeMagProcessor();
 
-    void Reset(float sampleRate, int numChannels, int osamount);
-    void ProcessBuffer(std::vector<std::vector<float>>& buffer, int blockSize);
-
+    void Reset (float sampleRate, int numChannels, int osamount);
+    void ProcessBuffer (std::vector<std::vector<float>>& buffer, int blockSize);
 
 private:
-
     // DSP objects
     std::vector<std::unique_ptr<rk4thOrderODETapeMag>> TapeODESolvers;
     std::vector<std::unique_ptr<FIRFilter>> InterpolationFilters;
@@ -31,5 +25,4 @@ private:
     int NumChannels = 2;
     int OSamount = 2;
     int OSiterations = 1;
-
 };

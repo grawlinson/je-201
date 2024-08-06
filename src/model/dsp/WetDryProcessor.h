@@ -1,25 +1,23 @@
 #pragma once
 
-class WetDryProcessor {
+class WetDryProcessor
+{
 public:
     WetDryProcessor() {}
 
-    void reset(int numChannels) 
+    void reset (int numChannels)
     {
         NumChannels = numChannels;
-
-
     }
 
-
     //output is written to wet buffer
-    void ProcessBuffer(std::vector<std::vector<float>>& dryBuffer, std::vector<std::vector<float>>& wetBuffer, int blockSize, float Wet, float outputBufferScale)
+    void ProcessBuffer (std::vector<std::vector<float>>& dryBuffer, std::vector<std::vector<float>>& wetBuffer, int blockSize, float Wet, float outputBufferScale)
     {
         // Set channels to buffer size if inconsistent,
         // avoids segmentation errors when mono only.
         if (dryBuffer.size() != NumChannels)
             NumChannels = dryBuffer.size();
-        
+
         // Save wet variable
         wet = Wet;
 

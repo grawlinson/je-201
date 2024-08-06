@@ -11,23 +11,23 @@
 //==============================================================================
 JE201AudioProcessor::JE201AudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
-: foleys::MagicProcessor (BusesProperties()
-                     #if ! JucePlugin_IsMidiEffect
-                      #if ! JucePlugin_IsSynth
-                       .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
-                      #endif
-                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
-                     #endif
-                       ),treestate(*this, nullptr, "parameters", params())
+    : foleys::MagicProcessor (BusesProperties()
+    #if !JucePlugin_IsMidiEffect
+        #if !JucePlugin_IsSynth
+                                  .withInput ("Input", juce::AudioChannelSet::stereo(), true)
+        #endif
+                                  .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
+    #endif
+              ),
+      treestate (*this, nullptr, "parameters", params())
 #endif
 {
-    
-    FOLEYS_SET_SOURCE_PATH(__FILE__);
-    
-    magicState.setGuiValueTree(BinaryData::magic_xml, BinaryData::magic_xmlSize);
-    
+    FOLEYS_SET_SOURCE_PATH (__FILE__);
+
+    magicState.setGuiValueTree (BinaryData::magic_xml, BinaryData::magic_xmlSize);
+
     // Set this processor object as a listener to the value tree
-    treestate.state.addListener(this);
+    treestate.state.addListener (this);
 
     // Add parameters to treestate
     populateParameters();
@@ -48,29 +48,29 @@ const juce::String JE201AudioProcessor::getName() const
 
 bool JE201AudioProcessor::acceptsMidi() const
 {
-   #if JucePlugin_WantsMidiInput
+#if JucePlugin_WantsMidiInput
     return true;
-   #else
+#else
     return false;
-   #endif
+#endif
 }
 
 bool JE201AudioProcessor::producesMidi() const
 {
-   #if JucePlugin_ProducesMidiOutput
+#if JucePlugin_ProducesMidiOutput
     return true;
-   #else
+#else
     return false;
-   #endif
+#endif
 }
 
 bool JE201AudioProcessor::isMidiEffect() const
 {
-   #if JucePlugin_IsMidiEffect
+#if JucePlugin_IsMidiEffect
     return true;
-   #else
+#else
     return false;
-   #endif
+#endif
 }
 
 double JE201AudioProcessor::getTailLengthSeconds() const
@@ -80,8 +80,8 @@ double JE201AudioProcessor::getTailLengthSeconds() const
 
 int JE201AudioProcessor::getNumPrograms()
 {
-    return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
-                // so this should be at least 1, even if you're not really implementing programs.
+    return 1; // NB: some hosts don't cope very well if you tell them there are 0 programs,
+        // so this should be at least 1, even if you're not really implementing programs.
 }
 
 int JE201AudioProcessor::getCurrentProgram()
@@ -107,13 +107,12 @@ void JE201AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
-    
+
     // Clear atomic flag so that parameters are saved to internal variables
     changesApplied.clear();
-    
+
     // Reset tape model object, Set OS Amount to 1 (disabled for now, fix in future updates), set max channel count to 2.
-    echomodel.Reset(sampleRate, 1, 2);
-    
+    echomodel.Reset (sampleRate, 1, 2);
 }
 
 void JE201AudioProcessor::releaseResources()
@@ -125,33 +124,33 @@ void JE201AudioProcessor::releaseResources()
 #ifndef JucePlugin_PreferredChannelConfigurations
 bool JE201AudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
-  #if JucePlugin_IsMidiEffect
+    #if JucePlugin_IsMidiEffect
     juce::ignoreUnused (layouts);
     return true;
-  #else
+    #else
     // This is the place where you check if the layout is supported.
     // In this template code we only support mono or stereo.
     // Some plugin hosts, such as certain GarageBand versions, will only
     // load plugins that support stereo bus layouts.
     if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono()
-     && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
+        && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
         return false;
 
-    // This checks if the input layout matches the output layout
-   #if ! JucePlugin_IsSynth
+            // This checks if the input layout matches the output layout
+        #if !JucePlugin_IsSynth
     if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet())
         return false;
-   #endif
+        #endif
 
     return true;
-  #endif
+    #endif
 }
 #endif
 
 void JE201AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
-    auto totalNumInputChannels  = getTotalNumInputChannels();
+    auto totalNumInputChannels = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
     // In case we have more outputs than inputs, this code clears any output
@@ -165,22 +164,20 @@ void JE201AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
 
     // Update dsp object with plugin parameter values
     updateParameters();
-  
+
     // Get write pointer to channels
     auto bufferpointer = buffer.getArrayOfWritePointers();
 
-
     // Initialise processing buffer, applying buffer to vectorvectorfloat array allows easier duplication if parallel processing is required
     std::vector<std::vector<float>> processingbuffer;
- 
+
     // Resize processing buffer
-    processingbuffer.resize(totalNumOutputChannels);
+    processingbuffer.resize (totalNumOutputChannels);
     for (int i = 0; i < totalNumOutputChannels; ++i)
     {
-        processingbuffer[i].resize(buffer.getNumSamples());
-
+        processingbuffer[i].resize (buffer.getNumSamples());
     }
-    
+
     // Apply audio to processing buffer
     for (int channel = 0; channel < totalNumOutputChannels; channel++)
     {
@@ -195,8 +192,8 @@ void JE201AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
     }
 
     // Apply signal processing
-    echomodel.ProcessBuffer(processingbuffer, buffer.getNumSamples());
-    
+    echomodel.ProcessBuffer (processingbuffer, buffer.getNumSamples());
+
     // Apply processed audio to buffer write pointer
     for (int channel = 0; channel < totalNumOutputChannels; channel++)
     {
@@ -205,10 +202,7 @@ void JE201AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
             bufferpointer[channel][sample] = processingbuffer[channel][sample];
         }
     }
-    
-    
 }
-
 
 //==============================================================================
 // This creates new instances of the plugin..
@@ -217,79 +211,68 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
     return new JE201AudioProcessor();
 }
 
-juce::AudioProcessorValueTreeState::ParameterLayout JE201AudioProcessor::params() {
-
+juce::AudioProcessorValueTreeState::ParameterLayout JE201AudioProcessor::params()
+{
     juce::AudioProcessorValueTreeState::ParameterLayout parameters;
 
-    auto inputgroup = std::make_unique<juce::AudioProcessorParameterGroup>("Input", "INPUT", "|");
+    auto inputgroup = std::make_unique<juce::AudioProcessorParameterGroup> ("Input", "INPUT", "|");
 
-    inputgroup->addChild(std::make_unique<juce::AudioParameterFloat>("InputLevel", "INPUTLEVEL", 0.0f, 5.0f, 0.5f));
-    inputgroup->addChild(std::make_unique<juce::AudioParameterFloat>("WetDry", "WETDRY", 0.0f, 1.0f, 0.5f));
-    inputgroup->addChild(std::make_unique<juce::AudioParameterFloat>("Bass", "BASS", 0.0f, 1.0f, 0.5f));
-    inputgroup->addChild(std::make_unique<juce::AudioParameterFloat>("Treble", "TREBLE", 0.0f, 1.0f, 0.5f));
+    inputgroup->addChild (std::make_unique<juce::AudioParameterFloat> ("InputLevel", "INPUTLEVEL", 0.0f, 5.0f, 0.5f));
+    inputgroup->addChild (std::make_unique<juce::AudioParameterFloat> ("WetDry", "WETDRY", 0.0f, 1.0f, 0.5f));
+    inputgroup->addChild (std::make_unique<juce::AudioParameterFloat> ("Bass", "BASS", 0.0f, 1.0f, 0.5f));
+    inputgroup->addChild (std::make_unique<juce::AudioParameterFloat> ("Treble", "TREBLE", 0.0f, 1.0f, 0.5f));
 
-    parameters.add(std::move(inputgroup));
+    parameters.add (std::move (inputgroup));
 
+    auto delaygroup = std::make_unique<juce::AudioProcessorParameterGroup> ("Delay", "DELAY", "|");
 
-    auto delaygroup = std::make_unique<juce::AudioProcessorParameterGroup>("Delay", "DELAY", "|");
+    delaygroup->addChild (std::make_unique<juce::AudioParameterChoice> ("DelaySetting", "DELAYSETTING", juce::StringArray ("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "Reverb Only"), 0));
+    delaygroup->addChild (std::make_unique<juce::AudioParameterFloat> ("RepeatRate", "REPEATRATE", 0.0f, 1.0f, 0.5f));
+    delaygroup->addChild (std::make_unique<juce::AudioParameterFloat> ("Intensity", "INTENSITY", 0.0f, 1.0f, 0.5f));
 
-    delaygroup->addChild(std::make_unique<juce::AudioParameterChoice>("DelaySetting", "DELAYSETTING", juce::StringArray("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "Reverb Only"), 0));
-    delaygroup->addChild(std::make_unique<juce::AudioParameterFloat>("RepeatRate", "REPEATRATE", 0.0f, 1.0f, 0.5f));
-    delaygroup->addChild(std::make_unique<juce::AudioParameterFloat>("Intensity", "INTENSITY", 0.0f, 1.0f, 0.5f));
+    parameters.add (std::move (delaygroup));
 
-    parameters.add(std::move(delaygroup));
+    auto mastergroup = std::make_unique<juce::AudioProcessorParameterGroup> ("Master", "MASTER", "|");
 
-    auto mastergroup = std::make_unique<juce::AudioProcessorParameterGroup>("Master", "MASTER", "|");
-
-    mastergroup->addChild(std::make_unique<juce::AudioParameterChoice>("ReverbType", "REVERBTYPE", juce::StringArray("Convolution", "Waveguide"), 0));
+    mastergroup->addChild (std::make_unique<juce::AudioParameterChoice> ("ReverbType", "REVERBTYPE", juce::StringArray ("Convolution", "Waveguide"), 0));
     //mastergroup->addChild(std::make_unique<juce::AudioParameterChoice>("OsAmount", "OSAMOUNT", juce::StringArray("1", "2", "4", "8", "16"), 0));
-    mastergroup->addChild(std::make_unique<juce::AudioParameterFloat>("ReverbVolume", "REVERBVOLUME", 0.0f, 1.0f, 0.5f));
-    mastergroup->addChild(std::make_unique<juce::AudioParameterFloat>("EchoVolume", "ECHOVOLUME", 0.0f, 1.0f, 0.5f));
+    mastergroup->addChild (std::make_unique<juce::AudioParameterFloat> ("ReverbVolume", "REVERBVOLUME", 0.0f, 1.0f, 0.5f));
+    mastergroup->addChild (std::make_unique<juce::AudioParameterFloat> ("EchoVolume", "ECHOVOLUME", 0.0f, 1.0f, 0.5f));
 
-    parameters.add(std::move(mastergroup));
+    parameters.add (std::move (mastergroup));
 
     return parameters;
-
 }
 
+void JE201AudioProcessor::populateParameters()
+{
+    InputLevel = treestate.getRawParameterValue ("InputLevel");
+    WetDry = treestate.getRawParameterValue ("WetDry");
+    Bass = treestate.getRawParameterValue ("Bass");
+    Treble = treestate.getRawParameterValue ("Treble");
 
+    DelaySetting = (static_cast<juce::AudioParameterChoice*> (treestate.getParameter ("DelaySetting")));
+    RepeatRate = treestate.getRawParameterValue ("RepeatRate");
+    Intensity = treestate.getRawParameterValue ("Intensity");
 
-void JE201AudioProcessor::populateParameters() {
-
-    
-
-    InputLevel = treestate.getRawParameterValue("InputLevel");
-    WetDry = treestate.getRawParameterValue("WetDry");
-    Bass = treestate.getRawParameterValue("Bass");
-    Treble = treestate.getRawParameterValue("Treble");
-    
-    
-    DelaySetting = (static_cast<juce::AudioParameterChoice*>(treestate.getParameter("DelaySetting")));
-    RepeatRate = treestate.getRawParameterValue("RepeatRate");
-    Intensity = treestate.getRawParameterValue("Intensity");
-
-    ReverbType = (static_cast<juce::AudioParameterChoice*>(treestate.getParameter("ReverbType")));
+    ReverbType = (static_cast<juce::AudioParameterChoice*> (treestate.getParameter ("ReverbType")));
     //OSAmount = (static_cast<juce::AudioParameterChoice*>(treestate.getParameter("OsAmount")));
-    ReverbVolume = treestate.getRawParameterValue("ReverbVolume");
-    EchoVolume = treestate.getRawParameterValue("EchoVolume");
-
+    ReverbVolume = treestate.getRawParameterValue ("ReverbVolume");
+    EchoVolume = treestate.getRawParameterValue ("EchoVolume");
 }
 
-void JE201AudioProcessor::updateParameters() {
-
+void JE201AudioProcessor::updateParameters()
+{
     if (changesApplied.test_and_set())
     {
         return;
     }
-    
+
     applyDelaySettings();
-    echomodel.UpdateParameters(*Bass, *Treble, *Intensity, *RepeatRate, playheadstates, delayEnabled[*DelaySetting], *EchoVolume, reverbEnabled[*DelaySetting], *ReverbVolume, *InputLevel, *WetDry, *ReverbType);
-    
-
-
+    echomodel.UpdateParameters (*Bass, *Treble, *Intensity, *RepeatRate, playheadstates, delayEnabled[*DelaySetting], *EchoVolume, reverbEnabled[*DelaySetting], *ReverbVolume, *InputLevel, *WetDry, *ReverbType);
 }
 
-void JE201AudioProcessor::valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged,
+void JE201AudioProcessor::valueTreePropertyChanged (juce::ValueTree& treeWhosePropertyHasChanged,
     const juce::Identifier& property)
 {
     // Clear atomic flag so that parameters are saved to internal variables
