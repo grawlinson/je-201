@@ -22,12 +22,12 @@ jobs:
       matrix:
         include:
           - name: Linux (gcc)
-            os: ubuntu-latest
+            os: ubuntu-24.04
             c_compiler: gcc
             cpp_compiler: g++
             cmake_parallel: 4
           - name: Linux (clang)
-            os: ubuntu-latest
+            os: ubuntu-24.04
             c_compiler: clang
             cpp_compiler: clang++
             cmake_parallel: 4
