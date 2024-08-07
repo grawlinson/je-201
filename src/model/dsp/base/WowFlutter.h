@@ -70,21 +70,11 @@ private:
     {
         float noise = 0.0;
 
-#if defined _WINDOWS || defined _WINDLL
         // fNoise is 0 -> 32767.0
         noise = (float) rand();
 
         // normalize and make bipolar
         noise = 2.f * (noise / 32767.f) - 1.f;
-#else
-        // fNoise is 0 -> ARC4RANDOMMAX
-        noise = (float) arc4random();
-
-        double arc4random_max = 4294967295.0;
-
-        // normalize and make bipolar
-        noise = 2.0 * (noise / arc4random_max) - 1.0;
-#endif
 
         return noise;
     }
