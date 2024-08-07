@@ -9,6 +9,7 @@
 
 #include "Biquad.h"
 #include <cmath>
+#include <stdlib.h>
 
 class SineOsc
 {
