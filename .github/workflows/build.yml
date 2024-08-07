@@ -1,0 +1,74 @@
+---
+
+name: If it compiles, ship it!
+
+on:
+  push:
+    branches: [ "primary" ]
+  pull_request:
+    branches: [ "primary" ]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations.
+      fail-fast: false
+
+      matrix:
+        include:
+          - name: Linux (gcc)
+            os: ubuntu-latest
+            c_compiler: gcc
+            cpp_compiler: g++
+            cmake_parallel: 4
+          - name: Linux (clang)
+            os: ubuntu-latest
+            c_compiler: clang
+            cpp_compiler: clang++
+            cmake_parallel: 4
+          - name: macOS
+            os: macos-latest
+            c_compiler: clang
+            cpp_compiler: clang++
+            cmake_parallel: 3
+          - name: Windows
+            os: windows-latest
+            c_compiler: cl
+            cpp_compiler: cl
+            cmake_parallel: 4
+
+    steps:
+      # We need *all* the submodules. Every. Single. One.
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Set reusable strings
+      # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
+      id: strings
+      shell: bash
+      run: |
+        echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+
+    - name: Install dependencies (Linux)
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update && sudo apt install libasound2-dev libx11-dev libxinerama-dev libxext-dev libfreetype6-dev libwebkit2gtk-4.0-dev libglu1-mesa-dev xvfb
+
+    - name: Configure CMake
+      run: >
+        cmake -B ${{ steps.strings.outputs.build-output-dir }}
+        -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }}
+        -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
+        -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
+        -DCMAKE_BUILD_PARALLEL_LEVEL=${{ matrix.cmake_parallel }}
+        -S ${{ github.workspace }}
+
+    - name: Build
+      #Note: --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
+      run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ env.BUILD_TYPE }}
