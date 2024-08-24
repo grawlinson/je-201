@@ -101,81 +101,63 @@ private:
     // Function to apply playhead states based on mode selection
     void applyDelaySettings()
     {
-        if (*DelaySetting == 0)
+        switch (*DelaySetting)
         {
-            playheadstates[0] = 1;
-            playheadstates[1] = 0;
-            playheadstates[2] = 0;
-        }
-
-        if (*DelaySetting == 1)
-        {
-            playheadstates[0] = 0;
-            playheadstates[1] = 1;
-            playheadstates[2] = 0;
-        }
-
-        if (*DelaySetting == 2)
-        {
-            playheadstates[0] = 0;
-            playheadstates[1] = 0;
-            playheadstates[2] = 1;
-        }
-
-        if (*DelaySetting == 3)
-        {
-            playheadstates[0] = 0;
-            playheadstates[1] = 1;
-            playheadstates[2] = 1;
-        }
-
-        if (*DelaySetting == 4)
-        {
-            playheadstates[0] = 1;
-            playheadstates[1] = 0;
-            playheadstates[2] = 0;
-        }
-
-        if (*DelaySetting == 5)
-        {
-            playheadstates[0] = 0;
-            playheadstates[1] = 1;
-            playheadstates[2] = 0;
-        }
-
-        if (*DelaySetting == 6)
-        {
-            playheadstates[0] = 0;
-            playheadstates[1] = 0;
-            playheadstates[2] = 1;
-        }
-
-        if (*DelaySetting == 7)
-        {
-            playheadstates[0] = 1;
-            playheadstates[1] = 1;
-            playheadstates[2] = 0;
-        }
-
-        if (*DelaySetting == 8)
-        {
-            playheadstates[0] = 0;
-            playheadstates[1] = 1;
-            playheadstates[2] = 1;
-        }
-
-        if (*DelaySetting == 9)
-        {
-            playheadstates[0] = 1;
-            playheadstates[1] = 0;
-            playheadstates[2] = 1;
-        }
-
-        if (*DelaySetting == 10)
-        {
-            playheadstates[0] = 1;
-            playheadstates[1] = 1;
-            playheadstates[2] = 1;
+            case 0:
+                playheadstates[0] = 1;
+                playheadstates[1] = 0;
+                playheadstates[2] = 0;
+                break;
+            case 1:
+                playheadstates[0] = 0;
+                playheadstates[1] = 1;
+                playheadstates[2] = 0;
+                break;
+            case 2:
+                playheadstates[0] = 0;
+                playheadstates[1] = 0;
+                playheadstates[2] = 1;
+                break;
+            case 3:
+                playheadstates[0] = 0;
+                playheadstates[1] = 1;
+                playheadstates[2] = 1;
+                break;
+            case 4:
+                break;
+                playheadstates[0] = 1;
+                playheadstates[1] = 0;
+                playheadstates[2] = 0;
+            case 5:
+                playheadstates[0] = 0;
+                playheadstates[1] = 1;
+                playheadstates[2] = 0;
+                break;
+            case 6:
+                playheadstates[0] = 0;
+                playheadstates[1] = 0;
+                playheadstates[2] = 1;
+                break;
+            case 7:
+                playheadstates[0] = 1;
+                playheadstates[1] = 1;
+                playheadstates[2] = 0;
+                break;
+            case 8:
+                playheadstates[0] = 0;
+                playheadstates[1] = 1;
+                playheadstates[2] = 1;
+                break;
+            case 9:
+                playheadstates[0] = 1;
+                playheadstates[1] = 0;
+                playheadstates[2] = 1;
+                break;
+            case 10:
+                playheadstates[0] = 1;
+                playheadstates[1] = 1;
+                playheadstates[2] = 1;
+                break;
         }
     }
 
