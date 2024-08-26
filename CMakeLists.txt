@@ -19,7 +19,10 @@ add_subdirectory(src/model)
 set(COMPANY_NAME "grawlinson")
 set(PROJECT_NAME "JE-201")
 set(PLUGIN_ID "com.${COMPANY_NAME}.${PROJECT_NAME}")
-project(${PROJECT_NAME} VERSION 1.0.1 LANGUAGES CXX)
+project(${PROJECT_NAME}
+  VERSION 1.0.1
+  LANGUAGES CXX
+)
 
 # setup JUCE
 juce_add_plugin(${PROJECT_NAME}
